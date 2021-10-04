@@ -1,5 +1,5 @@
 <template>
-  <button class="button" title="text">
+  <button :class="{'button--is-active': isActive}" class="button" title="text">
     <span class="button__text">
       {{ text }}
     </span>
@@ -13,6 +13,12 @@ export default {
     text: {
       type: String,
       default: "",
+    },
+    props: {
+      isActive: {
+        type: Boolean,
+        default: false,
+      },
     },
   },
 };
@@ -29,6 +35,12 @@ export default {
   border: 1px solid transparent;
   transition: opacity 0.2s, border-color 0.2s;
   font-family: "Inter", sans-serif;
+  pointer-events: none;
+
+  &--is-active {
+    pointer-events: auto;
+      background: red;
+  }
 
   &:hover {
     opacity: 0.7;

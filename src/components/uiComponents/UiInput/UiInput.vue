@@ -8,6 +8,7 @@
         v-if="text"
         :placeholder="placeholder"
         @input="inputUpdate"
+        :class="{'input__item--is-empty': empty}"
         class="input__item input__item--text"
       ></textarea>
       <input
@@ -16,6 +17,7 @@
         :placeholder="placeholder"
         :value="modelValue"
         @input="inputUpdate"
+        :class="{'input__item--is-empty': empty}"
         class="input__item"
       />
     </label>

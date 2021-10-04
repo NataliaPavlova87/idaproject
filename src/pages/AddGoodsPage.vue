@@ -1,8 +1,15 @@
 <template>
   <div class="add-goods-page">
     <header class="add-goods-page__header add-goods-page-header">
-      <h2 class="add-goods-page-header__title">Добавление товара</h2>
-      <UiSelect />
+      <h2 @click="sortDate" class="add-goods-page-header__title">
+        Добавление товара
+      </h2>
+      <UiSelect
+        @select="optionSelect"
+        :options="selectOptions"
+        :selected="selected"
+        class="add-goods-page-header__select"
+      />
     </header>
     <AddGoodsForm
       @createNewProduct="createProduct"
@@ -30,6 +37,19 @@ export default {
   },
   data() {
     return {
+      selected: "По умолчанию",
+      sortedProducts: [],
+      selectOptions: [
+        {
+          name: "min",
+          value: "По убыванию",
+        },
+        {
+          name: "max",
+          value: "По возрастанию",
+        },
+      ],
+      sortedGoodsItem: [],
       goods: [
         {
           id: 1,
@@ -75,6 +95,23 @@ export default {
     },
     removeProduct(product) {
       this.goods = this.goods.filter((p) => p.id !== product.id);
+    },
+    optionSelect(option) {
+      this.selected = option.value;
+      this.sortedGoods(option);
+    },
+    sortedGoods(option) {
+      for (let i = 0; this.goods.length > i; i++) {
+        this.goods.price = +this.goods[i].price;
+      }
+
+      if (option.name === "min") {
+        this.goods.sort((a, b) => b.price - a.price);
+      }
+
+      if (option.name === "max") {
+        this.goods.sort((a, b) => a.price - b.price);
+      }
     },
   },
 };
@@ -145,6 +182,7 @@ button:focus {
 .add-goods-page-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -155,6 +193,10 @@ button:focus {
     font-size: 28px;
     line-height: 35px;
     color: hsl(0, 0%, 25%);
+  }
+
+  &__select {
+    min-width: 135px;
   }
 }
 </style>
