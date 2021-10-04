@@ -1,5 +1,5 @@
 <template>
-  <button :class="{'button--is-active': isActive}" class="button" title="text">
+  <button class="button" title="text">
     <span class="button__text">
       {{ text }}
     </span>
@@ -29,18 +29,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #eeeeee;
+  background: hsl(112, 27%, 57%);
   border-radius: 10px;
   padding: 10px;
   border: 1px solid transparent;
   transition: opacity 0.2s, border-color 0.2s;
   font-family: "Inter", sans-serif;
-  pointer-events: none;
-
-  &--is-active {
-    pointer-events: auto;
-      background: red;
-  }
 
   &:hover {
     opacity: 0.7;
@@ -60,7 +54,7 @@ export default {
     font-size: 12px;
     text-align: center;
     letter-spacing: -0.02em;
-    color: hsl(0, 0%, 71%);
+    color: hsl(0, 0%, 100%);
   }
 }
 </style>

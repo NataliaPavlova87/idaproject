@@ -38,7 +38,6 @@
     </UiInput>
     <UiButton
       @click="createProduct"
-      :isActive="isActive"
       text="Добавить товар"
       class="add-goods-form__button"
     />
@@ -57,7 +56,7 @@ export default {
   },
   data() {
     return {
-          isActive: false,
+      isActive: false,
       product: {
         id: "",
         title: "",
@@ -71,49 +70,38 @@ export default {
       errorPrice: false,
     };
   },
-  watch: {
-    d() {
-    console.log(typeof(this.product.title));
-    },
-
-  },
   methods: {
     createProduct() {
       this.product.id = Date();
       this.validationForm(this.product);
-      this.$emit("createNewProduct", this.product);
-      this.product = {
-        id: "",
-        title: "",
-        text: "",
-        src: "",
-        price: "",
-      };
-    },
-    activeButton() {
-      this.isActive = !this.isActive;
-    },
-    submitForm(e) {
-      console.log(e);
-      e.preventDefault();
+
+      if (this.isActive === true) {
+        this.$emit("createNewProduct", this.product);
+        this.product = {
+          id: "",
+          title: "",
+          text: "",
+          src: "",
+          price: "",
+        };
+      }
     },
     validationForm(product) {
-      if (product.title === "") {
-        console.log();
-        this.errorTitle = true;
-      }
+      product.title === ""
+        ? (this.errorTitle = true)
+        : (this.errorTitle = false);
 
-      if (product.text === "") {
-        this.errorText = true;
-      }
+      product.text === "" 
+        ? (this.errorText = true) 
+        : (this.errorText = false);
 
-      if (product.src === "") {
-        this.errorSrc = true;
-      }
+      product.src === "" 
+        ? (this.errorSrc = true) 
+        : (this.errorSrc = false);
 
-      if (product.price === "") {
-        this.errorPrice = true;
-      }
+      product.price === ""
+        ? (this.errorPrice = true)
+        : (this.errorPrice = false);
 
       if (
         this.errorTitle === true ||
@@ -121,8 +109,9 @@ export default {
         this.errorSrc === true ||
         this.errorPrice === true
       ) {
-        this.submitForm();
-        return;
+        this.isActive = false;
+      } else {
+        this.isActive = true;
       }
     },
   },
